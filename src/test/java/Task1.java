@@ -83,8 +83,10 @@ public class Task1 {
 */
 
             createFieldValues();
+            driver.findElement(By.xpath("//input[@name='female']")).click();
 
             checkingFields();
+            assertEquals("1", driver.findElement(By.xpath("//input[@name='female']")).getAttribute("value"));
 
 
             driver.findElement(By.xpath("//span[@class='b-continue-btn']")).click();
