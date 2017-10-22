@@ -37,69 +37,70 @@ public class Task1 {
                 driver.findElement(By.xpath("//a[contains(text(), 'Страхование путешественников')]"))));
         driver.findElement(By.xpath("//a[contains(text(), 'Страхование путешественников')]")).click();
 
-        if(driver.getTitle().contains("Страхование путешественников")) {
-            //driver.findElement(By.xpath("(//a[@target='_blank'])[1]")).click();
-            //wait.until((ExpectedConditions.visibilityOf(
-                    //driver.findElement(By.xpath("//div[id='views']")))));
-            driver.get(driver.findElement(By.xpath("(//a[@target='_blank'])[1]")).getAttribute("href"));
-            WebElement webElem = driver.findElement(By.xpath("(//h3[@class='b-form-section-title'])[5]"));
-            ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", webElem);
+        //Если нету титульника - завершаем тест.
+        if(!driver.getTitle().contains("Страхование путешественников")) {
+            System.out.println("Страница не открылась");
+            return;
+        }
 
+        // Переходим на новую вкладку
+        driver.get(driver.findElement(By.xpath("(//a[@target='_blank'])[1]")).getAttribute("href"));
 
-            driver.findElement(By.xpath("(//div[@class='b-form-prog-box'])[1]")).click();
-            driver.findElement(By.xpath("//span[@class='b-continue-btn']")).click();
+        driver.findElement(By.xpath("(//div[@class='b-form-prog-box'])[1]")).click();
+        driver.findElement(By.xpath("//span[@class='b-continue-btn']")).click();
 
- /*           fillField(By.name("insured0_surname"), "AAA");
-            fillField(By.name("insured0_name"), "BBB");
-            fillField(By.name("insured0_birthDate"), "19.07.1999");
+ /*       fillField(By.name("insured0_surname"), "AAA");
+        fillField(By.name("insured0_name"), "BBB");
+        fillField(By.name("insured0_birthDate"), "19.07.1999");
 
-            driver.findElement(By.name("surname")).click();
-            fillField(By.name("surname"), "йцукен");
-            fillField(By.name("name"), "фывап");
-            fillField(By.name("middlename"), "Вапрол");
-            fillField(By.name("birthDate"), "19.10.1990");
+        driver.findElement(By.name("surname")).click();
+        fillField(By.name("surname"), "йцукен");
+        fillField(By.name("name"), "фывап");
+        fillField(By.name("middlename"), "Вапрол");
+        fillField(By.name("birthDate"), "19.10.1990");
 
-            driver.findElement(By.xpath("//input[@name='female']")).click();
-            fillField(By.name("passport_series"), "1123");
-            fillField(By.name("passport_number"), "456987");
-            fillField(By.name("issueDate"), "01.01.2014");
-            fillField(By.name("issuePlace"), "Ghkjhdcfvulhv");
+        driver.findElement(By.xpath("//input[@name='female']")).click();
+        fillField(By.name("passport_series"), "1123");
+        fillField(By.name("passport_number"), "456987");
+        fillField(By.name("issueDate"), "01.01.2014");
+        fillField(By.name("issuePlace"), "Ghkjhdcfvulhv");
 
-            assertEquals("AAA", driver.findElement(By.name("insured0_surname")).getAttribute("value"));
-            assertEquals("BBB", driver.findElement(By.name("insured0_name")).getAttribute("value"));
-            assertEquals("19.07.1999", driver.findElement(By.name("insured0_birthDate")).getAttribute("value"));
+        assertEquals("AAA", driver.findElement(By.name("insured0_surname")).getAttribute("value"));
+        assertEquals("BBB", driver.findElement(By.name("insured0_name")).getAttribute("value"));
+        assertEquals("19.07.1999", driver.findElement(By.name("insured0_birthDate")).getAttribute("value"));
 
-            assertEquals("Йцукен", driver.findElement(By.name("surname")).getAttribute("value"));
-            assertEquals("Фывап", driver.findElement(By.name("name")).getAttribute("value"));
-            assertEquals("Вапрол", driver.findElement(By.name("middlename")).getAttribute("value"));
-            assertEquals("19.10.1990", driver.findElement(By.name("birthDate")).getAttribute("value"));
+        assertEquals("Йцукен", driver.findElement(By.name("surname")).getAttribute("value"));
+        assertEquals("Фывап", driver.findElement(By.name("name")).getAttribute("value"));
+        assertEquals("Вапрол", driver.findElement(By.name("middlename")).getAttribute("value"));
+        assertEquals("19.10.1990", driver.findElement(By.name("birthDate")).getAttribute("value"));
 
-            assertEquals("BBB", driver.findElement(By.name("insured0_name")).getAttribute("value"));
-            assertEquals("1", driver.findElement(By.xpath("//input[@name='female']")).getAttribute("value"));
-            assertEquals("1123", driver.findElement(By.name("passport_series")).getAttribute("value"));
-            assertEquals("456987", driver.findElement(By.name("passport_number")).getAttribute("value"));
-            assertEquals("01.01.2014", driver.findElement(By.name("issueDate")).getAttribute("value"));
-            assertEquals("Ghkjhdcfvulhv", driver.findElement(By.name("issuePlace")).getAttribute("value"));
+        assertEquals("BBB", driver.findElement(By.name("insured0_name")).getAttribute("value"));
+        assertEquals("1", driver.findElement(By.xpath("//input[@name='female']")).getAttribute("value"));
+        assertEquals("1123", driver.findElement(By.name("passport_series")).getAttribute("value"));
+        assertEquals("456987", driver.findElement(By.name("passport_number")).getAttribute("value"));
+        assertEquals("01.01.2014", driver.findElement(By.name("issueDate")).getAttribute("value"));
+        assertEquals("Ghkjhdcfvulhv", driver.findElement(By.name("issuePlace")).getAttribute("value"));
 */
 
-            createFieldValues();
-            driver.findElement(By.xpath("//input[@name='female']")).click();
+        // заполняем поля
+        createFieldValues();
+        driver.findElement(By.xpath("//input[@name='female']")).click();
 
-            checkingFields();
-            assertEquals("1", driver.findElement(By.xpath("//input[@name='female']")).getAttribute("value"));
+        // проверяем правильность ввода
+        checkingFields();
+        assertEquals("1", driver.findElement(By.xpath("//input[@name='female']")).getAttribute("value"));
 
-
-            driver.findElement(By.xpath("//span[@class='b-continue-btn']")).click();
-            if (driver.findElement(By.xpath("//div[text()='Заполнены не все обязательные поля']")).isDisplayed()) {
-                System.out.println("COMPLETED");
-            }
-            else
-                System.out.println("Something going wrong :(");
+        // нажимает проверить и изем сообщение об ошибке
+        driver.findElement(By.xpath("//span[@class='b-continue-btn']")).click();
+        if (driver.findElement(By.xpath("//div[text()='Заполнены не все обязательные поля']")).isDisplayed()) {
+            System.out.println("COMPLETED");
+        }
+        else
+            System.out.println("Something going wrong :(");
 
         }
 
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-    }
+
 
     @After
     public void tearDown() throws Exception {
@@ -111,6 +112,7 @@ public class Task1 {
         driver.findElement(locator).sendKeys(value);
     }
 
+    // метод для создания коллекции name - value
     private void createFieldValues(){
         pathAndField.put("insured0_surname", "AName");
         pathAndField.put("insured0_name", "BBB");
@@ -131,6 +133,7 @@ public class Task1 {
 
     }
 
+    // метод проверки введёных значений
     private void checkingFields(){
 
         for(Map.Entry<String, String> entry : pathAndField.entrySet())
